@@ -8,17 +8,19 @@ export async function openDocxFile(): Promise<{ html: string; fileName: string }
     filters: [{ name: "Word dokumentum", extensions: ["docx"] }],
   });
 
-  if (!path) return null;
+  if (!path || Array.isArray(path)) return null;
 
-  const filePath = path as string;
-  const segments = filePath.replace(/\\/g, "/").split("/");
-  const fileName = segments[segments.length - 1];
+  const filePath = path;
+  const fileName = filePath.split(/[/\\]/).pop() ?? "document.docx";
 
-  const data = await readFile(filePath);
+  const uint8 = await readFile(filePath);
 
-  const result = await mammoth.convertToHtml({
-    arrayBuffer: data.buffer as ArrayBuffer,
-  });
+  const arrayBuffer = new Uint8Array(uint8).buffer;
 
-  return { html: result.value, fileName };
+  const result = await mammoth.convertToHtml({ arrayBuffer });
+
+  return {
+    html: result.value,
+    fileName,
+  };
 }

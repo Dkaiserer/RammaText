@@ -10,6 +10,8 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { useEffect } from "react";
 import { Editor as TiptapEditor } from "@tiptap/react";
 import { FontSize } from "./extensions/Fontsize.ts";
+import { Pagination } from "./extensions/Pagination";
+import "./editor.css";
 
 interface EditorProps {
   content: string;
@@ -29,6 +31,7 @@ export default function Editor({ content, setContent, onEditorReady }: EditorPro
       TextAlign.configure({ types: ["heading", "paragraph"] }),
       Link.configure({ openOnClick: false }),
       Placeholder.configure({ placeholder: "Kezdj el írni..." }),
+      Pagination,
     ],
     content,
     onUpdate: ({ editor }) => {
@@ -48,5 +51,9 @@ export default function Editor({ content, setContent, onEditorReady }: EditorPro
 
   if (!editor) return null;
 
-  return <EditorContent editor={editor} />;
+  return (
+    <div className="editor-container">
+      <EditorContent editor={editor} />
+    </div>
+  );
 }
