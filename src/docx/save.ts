@@ -103,34 +103,50 @@ function htmlToDocxChildren(html: string): Paragraph[] {
 }
 
 // ── Main save function ───────────────────────────────────────────────────────
-export async function saveDocx(html: string, defaultName = "dokumentum.docx"): Promise<void> {
-  const children = htmlToDocxChildren(html);
+export async function saveDocx(
+  html: string,
+  defaultName = "dokumentum.docx"
+): Promise<void> {
+  try {
+    const children = htmlToDocxChildren(html);
 
-  const doc = new Document({
-    numbering: {
-      config: [{
-        reference: "default-numbering",
-        levels: [{
-          level: 0,
-          format: "decimal",
-          text: "%1.",
-          alignment: AlignmentType.LEFT,
+    const doc = new Document({
+      numbering: {
+        config: [{
+          reference: "default-numbering",
+          levels: [{
+            level: 0,
+            format: "decimal",
+            text: "%1.",
+            alignment: AlignmentType.LEFT,
+          }],
         }],
-      }],
-    },
-    sections: [{ children }],
+      },
+      sections: [{ children }],
+    });
+
+    const blob = await Packer.toBlob(doc);
+    const arrayBuffer = await blob.arrayBuffer();
+    const uint8 = new Uint8Array(arrayBuffer);
+
+    const savePath = await save({
+      defaultPath: defaultName,
+      filters: [
+      {
+        name: "Word dokumentum",
+        extensions: ["docx"],
+      },
+    ],
   });
 
-  const blob = await Packer.toBlob(doc);
-  const arrayBuffer = await blob.arrayBuffer();
-  const uint8 = new Uint8Array(arrayBuffer);
+if (!savePath) return;
 
-  const savePath = await save({
-    defaultPath: defaultName,
-    filters: [{ name: "Word dokumentum", extensions: ["docx"] }],
-  });
+await writeFile(savePath, uint8, {
+  create: true,
+});
 
-  if (!savePath) return;
-
-  await writeFile(savePath, uint8);
+    console.log("DOCX saved successfully");
+  } catch (err) {
+    console.error("DOCX SAVE ERROR:", err);
+  }
 }
