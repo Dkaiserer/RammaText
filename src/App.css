@@ -3,9 +3,9 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --ribbon-bg: #2b579a;
-  --ribbon-hover: #1e3f73;
-  --ribbon-active: #16305e;
+  --ribbon-bg: #6b0d19;
+  --ribbon-hover: #6b0d19;
+  --ribbon-active: #6b0d19;
   --ribbon-text: #ffffff;
   --toolbar-bg: #f3f2f1;
   --toolbar-border: #d2d0ce;
@@ -14,7 +14,7 @@
   --page-bg: #ffffff;
   --page-shadow: 0 2px 8px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.1);
   --shell-bg: #e8e8e8;
-  --status-bg: #2b579a;
+  --status-bg: #6b0d19;
   --status-text: #ffffff;
   --text-color: #201f1e;
   --border-color: #d2d0ce;
@@ -208,7 +208,7 @@ html, body, #root {
   min-width: 100px;
 }
 
-.tb-heading-select:hover { border-color: #106ebe; }
+.tb-heading-select:hover { border-color: #6b0d19; }
 
 /* Color button */
 .color-btn-wrapper {

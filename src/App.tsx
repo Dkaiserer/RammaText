@@ -38,8 +38,8 @@ export default function App() {
       {/* Title bar */}
       <div className="title-bar" data-tauri-drag-region>
         <div className="title-bar-left">
-          <span className="app-logo">W</span>
-          <span className="app-name">WordClone</span>
+          <span className="app-logo">Rt</span>
+          <span className="app-name">RammaText</span>
         </div>
         <div className="title-bar-center">
           <span className="doc-name">{fileName ?? "Névtelen dokumentum"}</span>
